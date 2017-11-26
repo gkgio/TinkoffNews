@@ -28,15 +28,16 @@
             app:titleTextColor="@color/white" />
 
         <android.support.v4.widget.SwipeRefreshLayout
-            android:layout_marginTop="12dp"
             android:id="@+id/layoutSwipeRefresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginTop="12dp">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rvNews"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:scrollbars="vertical" />
         </android.support.v4.widget.SwipeRefreshLayout>
 
     </LinearLayout>

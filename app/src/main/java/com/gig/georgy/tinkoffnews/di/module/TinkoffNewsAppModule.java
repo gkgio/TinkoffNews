@@ -22,6 +22,7 @@ import java.io.IOException;
 import javax.inject.Named;
 import javax.inject.Singleton;
 import java.lang.reflect.Type;
+import java.util.concurrent.TimeUnit;
 
 import dagger.Module;
 import dagger.Provides;
@@ -106,7 +107,8 @@ public class TinkoffNewsAppModule {
     @Provides
     @Singleton
     OkHttpClient provideHttpClient() {
-        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        OkHttpClient.Builder builder = new OkHttpClient.Builder()
+                .connectTimeout(15, TimeUnit.SECONDS);
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(BuildConfig.DEBUG ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE);
         builder.interceptors().add(interceptor);

@@ -21,6 +21,9 @@ import com.gig.georgy.tinkoffnews.di.components.DaggerMainComponent;
 import com.gig.georgy.tinkoffnews.di.components.MainComponent;
 import com.gig.georgy.tinkoffnews.di.components.TinkoffNewsAppComponent;
 import com.gig.georgy.tinkoffnews.di.module.MainModule;
+import com.gig.georgy.tinkoffnews.model.News;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -32,6 +35,7 @@ public class NewsActivity extends BaseActivity implements HasComponent<MainCompo
     private MainComponent component;
 
     private RecyclerNewsAdapter recyclerNewsAdapter;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     private ProgressBar progressBar;
     private Toolbar toolbar;
@@ -44,17 +48,12 @@ public class NewsActivity extends BaseActivity implements HasComponent<MainCompo
         // toolbar
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setDisplayShowHomeEnabled(true);
-        }
 
         progressBar = findViewById(R.id.progressBar);
 
         final RecyclerView rvValues = (RecyclerView) findViewById(R.id.rvNews);
 
-        rvValues.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL));
+        rvValues.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
         rvValues.setItemAnimator(new DefaultItemAnimator());
 
@@ -63,8 +62,11 @@ public class NewsActivity extends BaseActivity implements HasComponent<MainCompo
         rvValues.setLayoutManager(new LinearLayoutManager(this));
         rvValues.setAdapter(recyclerNewsAdapter);
 
-        SwipeRefreshLayout swipeRefreshLayout = findViewById(R.id.layoutSwipeRefresh);
-        swipeRefreshLayout.setOnRefreshListener(() -> presenter.refreshOrLoadNews());
+        swipeRefreshLayout = findViewById(R.id.layoutSwipeRefresh);
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            hideProgress();
+            presenter.refreshOrLoadNews();
+        });
 
         presenter.refreshOrLoadNews();
     }
@@ -104,6 +106,12 @@ public class NewsActivity extends BaseActivity implements HasComponent<MainCompo
     @Override
     public void showMessage(int message, @SnackBarType int type) {
         showSnackBar(getWindow().getDecorView().getRootView(), message, type);
+    }
+
+    @Override
+    public void updateDateInRealm(List<News> newsList) {
+        recyclerNewsAdapter.update(newsList);
+        swipeRefreshLayout.setRefreshing(false);
     }
 
 

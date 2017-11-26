@@ -3,5 +3,6 @@
     android:id="@+id/tvTitle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:ellipsize="end"
     android:maxLines="2"
     android:padding="8dp" />
