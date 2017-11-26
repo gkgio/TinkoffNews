@@ -51,7 +51,7 @@ public class NewsActivity extends BaseActivity implements HasComponent<MainCompo
 
         progressBar = findViewById(R.id.progressBar);
 
-        final RecyclerView rvValues = (RecyclerView) findViewById(R.id.rvNews);
+        final RecyclerView rvValues = findViewById(R.id.rvNews);
 
         rvValues.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
@@ -63,10 +63,7 @@ public class NewsActivity extends BaseActivity implements HasComponent<MainCompo
         rvValues.setAdapter(recyclerNewsAdapter);
 
         swipeRefreshLayout = findViewById(R.id.layoutSwipeRefresh);
-        swipeRefreshLayout.setOnRefreshListener(() -> {
-            hideProgress();
-            presenter.refreshOrLoadNews();
-        });
+        swipeRefreshLayout.setOnRefreshListener(() -> presenter.refreshOrLoadNews());
 
         presenter.refreshOrLoadNews();
     }
