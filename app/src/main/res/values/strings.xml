@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">TinkoffNews</string>
+
+    <string name="news_activity_title">Tinkoff news</string>
+
+    <string name="toast_error">Ошибка подключения к серверу. Проверьте настройки сети или повторите попытку позже.</string>
+</resources>
